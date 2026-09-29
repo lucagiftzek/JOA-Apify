@@ -10,7 +10,8 @@
   },
   "input": "./input_schema.json",
   "storages": {
-    "dataset": "./dataset_schema.json"
+    "dataset": "./dataset_schema.json",
+    "keyValueStore": "./key_value_store_schema.json"
   },
   "minMemoryMbytes": 128,
   "maxMemoryMbytes": 512,
@@ -18,5 +19,6 @@
     "JOBS",
     "LEAD_GENERATION",
     "AI"
-  ]
+  ],
+  "output": "./output_schema.json"
 }

@@ -1,0 +1,14 @@
+{
+  "actorKeyValueStoreSchemaVersion": 1,
+  "title": "Job Opportunities API key-value store",
+  "description": "Run metadata.",
+  "collections": {
+    "summary": {
+      "title": "Run summary",
+      "description": "SUMMARY: mode, records returned, stop reason, filters used and next_cursor to continue a large pull in a later run.",
+      "keys": [
+        "SUMMARY"
+      ]
+    }
+  }
+}

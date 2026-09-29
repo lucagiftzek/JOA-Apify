@@ -1,0 +1,19 @@
+{
+  "actorOutputSchemaVersion": 1,
+  "title": "Job Opportunities API output",
+  "description": "Records returned by the run, and a summary with the cursor to continue a large pull.",
+  "properties": {
+    "results": {
+      "type": "string",
+      "title": "Results",
+      "description": "Job listings, closed jobs or employers (depending on the mode), as a table you can download as JSON, CSV or Excel.",
+      "template": "{{links.apiDefaultDatasetUrl}}/items?view=jobs"
+    },
+    "summary": {
+      "type": "string",
+      "title": "Run summary",
+      "description": "Records returned, why the run stopped, the applied filters and next_cursor for resuming.",
+      "template": "{{links.apiDefaultKeyValueStoreUrl}}/records/SUMMARY"
+    }
+  }
+}
