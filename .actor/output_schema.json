@@ -7,7 +7,7 @@
       "type": "string",
       "title": "Results",
       "description": "Job listings, closed jobs or employers (depending on the mode), as a table you can download as JSON, CSV or Excel.",
-      "template": "{{links.apiDefaultDatasetUrl}}/items?view=jobs"
+      "template": "{{links.apiDefaultDatasetUrl}}/items"
     },
     "summary": {
       "type": "string",
