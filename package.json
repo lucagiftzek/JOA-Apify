@@ -1,0 +1,22 @@
+{
+  "name": "joa-apify",
+  "version": "1.0.0",
+  "description": "Apify Actor: employer-direct jobs from the Job Opportunities API (JOA), pay per record.",
+  "type": "module",
+  "private": true,
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lucagiftzek/JOA-Apify.git"
+  },
+  "scripts": {
+    "start": "node src/main.js",
+    "test": "node --test \"test/*.test.js\""
+  },
+  "dependencies": {
+    "apify": "^3.4.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

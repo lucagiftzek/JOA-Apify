@@ -1,0 +1,6 @@
+.git
+node_modules
+storage
+apify_storage
+test
+*.md

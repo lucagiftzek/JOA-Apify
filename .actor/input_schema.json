@@ -1,0 +1,302 @@
+{
+  "title": "Job Opportunities API input",
+  "type": "object",
+  "schemaVersion": 1,
+  "description": "Pick a mode, add filters, set a result cap. You pay per record returned — never for empty pages or for filters that match nothing.",
+  "properties": {
+    "mode": {
+      "title": "Mode",
+      "type": "string",
+      "description": "What to fetch. Jobs = live vacancies. Closed jobs = roles that left their source (hiring signal). Companies = employers with open roles.",
+      "enum": [
+        "jobs",
+        "closed_jobs",
+        "companies"
+      ],
+      "enumTitles": [
+        "Jobs — live vacancies",
+        "Closed jobs — roles that came off their source",
+        "Companies — employers with open roles"
+      ],
+      "default": "jobs",
+      "editor": "select"
+    },
+    "maxResults": {
+      "title": "Max results",
+      "type": "integer",
+      "description": "Hard cap on records returned (and billed). The run stops as soon as it is reached. Use Start cursor to continue a large pull in a later run.",
+      "default": 100,
+      "minimum": 1,
+      "maximum": 100000,
+      "prefill": 100
+    },
+    "query": {
+      "title": "Search text",
+      "type": "string",
+      "description": "Full-text over job title, company name and location (Jobs / Closed jobs), or over the company name (Companies). Example: data engineer berlin",
+      "editor": "textfield",
+      "prefill": "software engineer"
+    },
+    "titleQuery": {
+      "title": "Title contains",
+      "type": "string",
+      "description": "Full-text over the job title only. ANDs with everything else. Jobs / Closed jobs only.",
+      "editor": "textfield"
+    },
+    "titleExclude": {
+      "title": "Title excludes",
+      "type": "string",
+      "description": "Drop rows whose title matches these words, e.g. intern trainee. Jobs / Closed jobs only.",
+      "editor": "textfield"
+    },
+    "descriptionContains": {
+      "title": "Description contains",
+      "type": "string",
+      "description": "Full-text over the advert body (only rows that carry a description). Example: kubernetes terraform. Jobs / Closed jobs only.",
+      "editor": "textfield"
+    },
+    "countries": {
+      "title": "Countries",
+      "type": "array",
+      "description": "ISO-3166 alpha-2 codes, e.g. DE, GR, FR, NL. Empty = worldwide.",
+      "editor": "stringList",
+      "items": {
+        "type": "string"
+      },
+      "prefill": [
+        "DE"
+      ]
+    },
+    "excludeCountries": {
+      "title": "Exclude countries",
+      "type": "array",
+      "description": "ISO-3166 alpha-2 codes to remove.",
+      "editor": "stringList",
+      "items": {
+        "type": "string"
+      }
+    },
+    "city": {
+      "title": "City",
+      "type": "string",
+      "description": "City name as it appears in the ledger, e.g. Berlin. Jobs / Closed jobs only.",
+      "editor": "textfield"
+    },
+    "remote": {
+      "title": "Work model",
+      "type": "array",
+      "description": "Remote / hybrid / on-site. Note: for most rows the work model is INFERRED — tick 'Only source-confirmed remote status' to keep rows where the employer stated it.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "remote",
+          "hybrid",
+          "on_site",
+          "not_stated"
+        ],
+        "enumTitles": [
+          "Remote",
+          "Hybrid",
+          "On site",
+          "Not stated"
+        ]
+      }
+    },
+    "remoteConfirmed": {
+      "title": "Only source-confirmed remote status",
+      "type": "boolean",
+      "description": "Keep only rows whose remote status was published by the employer (not inferred by us).",
+      "default": false
+    },
+    "employmentTypes": {
+      "title": "Employment type",
+      "type": "array",
+      "description": "Full-time, Part-time, Contract, Temporary, Internship, or not_stated.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Full-time",
+          "Part-time",
+          "Contract",
+          "Temporary",
+          "Internship",
+          "not_stated"
+        ]
+      }
+    },
+    "seniorities": {
+      "title": "Seniority",
+      "type": "array",
+      "description": "Entry, Intern, Mid, Senior, Lead, Manager, Director, Executive, or not_stated. Seniority is inferred and only stated where confidence is high.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Intern",
+          "Entry",
+          "Mid",
+          "Senior",
+          "Lead",
+          "Manager",
+          "Director",
+          "Executive",
+          "not_stated"
+        ]
+      }
+    },
+    "categories": {
+      "title": "Job category",
+      "type": "array",
+      "description": "Job family. 'uncategorised' selects rows without a confident classification.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "Healthcare",
+          "Engineering",
+          "Operations & Admin",
+          "Sales",
+          "uncategorised",
+          "Skilled Technician",
+          "Hospitality",
+          "Retail",
+          "Finance",
+          "Logistics & Transport",
+          "Marketing",
+          "Customer Support",
+          "Education",
+          "Manufacturing",
+          "HR & Recruiting",
+          "Data & Analytics",
+          "Consulting & Strategy",
+          "Construction & Trades",
+          "Legal & Compliance",
+          "Design",
+          "Product",
+          "Science & Research",
+          "Security",
+          "Procurement",
+          "Safety & Environment"
+        ]
+      }
+    },
+    "sourceTypes": {
+      "title": "Source type",
+      "type": "array",
+      "description": "Where the row comes from: Employer ATS, company career site, or public employment agency.",
+      "editor": "select",
+      "items": {
+        "type": "string",
+        "enum": [
+          "ats",
+          "career_site",
+          "public_agency"
+        ],
+        "enumTitles": [
+          "Employer ATS",
+          "Company career site",
+          "Public employment agency"
+        ]
+      }
+    },
+    "companySlugs": {
+      "title": "Company slugs",
+      "type": "array",
+      "description": "Restrict to specific employers by JOA slug (find slugs in Companies mode), e.g. e-vita-gmbh.",
+      "editor": "stringList",
+      "items": {
+        "type": "string"
+      }
+    },
+    "companyDomains": {
+      "title": "Company domains",
+      "type": "array",
+      "description": "Restrict to employers by bare domain (no scheme, no path), e.g. stripe.com, figma.com.",
+      "editor": "stringList",
+      "items": {
+        "type": "string"
+      }
+    },
+    "hasSalary": {
+      "title": "Only rows with a published salary",
+      "type": "boolean",
+      "description": "Keep only rows whose salary was published by the employer. Roughly 2% of the ledger carries structured salary — combine with a country to keep results useful.",
+      "default": false
+    },
+    "minSalaryEurAnnual": {
+      "title": "Minimum annual salary (EUR)",
+      "type": "integer",
+      "description": "Lower bound on the normalised annual salary in EUR. Implies published salary.",
+      "minimum": 0
+    },
+    "postedWithinDays": {
+      "title": "Posted within (days)",
+      "type": "integer",
+      "description": "Only roles posted in the last N days. Jobs / Closed jobs only.",
+      "minimum": 1,
+      "maximum": 3650
+    },
+    "verifiedWithinDays": {
+      "title": "Re-verified within (days)",
+      "type": "integer",
+      "description": "Only roles re-confirmed at their source in the last N days — the freshness filter. 97% of the ledger is re-checked inside 48 hours, so 2 is a good value. Jobs / Closed jobs only.",
+      "minimum": 1,
+      "maximum": 365
+    },
+    "closedWithinDays": {
+      "title": "Closed within (days)",
+      "type": "integer",
+      "description": "Closed jobs mode: only roles that closed in the last N days.",
+      "minimum": 1,
+      "maximum": 3650
+    },
+    "closedReason": {
+      "title": "Closed reason",
+      "type": "string",
+      "description": "Closed jobs mode: why the role left the ledger.",
+      "enum": [
+        "",
+        "expired_upstream",
+        "not_seen",
+        "employer_closed",
+        "deadline_passed"
+      ],
+      "enumTitles": [
+        "Any",
+        "Expired upstream (proven dead)",
+        "Not seen (stopped appearing)",
+        "Employer closed",
+        "Deadline passed"
+      ],
+      "default": "",
+      "editor": "select"
+    },
+    "includeDescription": {
+      "title": "Include full advert text",
+      "type": "boolean",
+      "description": "Add the full job description (about 2.5 KB per row) in a description field. Same price per record.",
+      "default": false
+    },
+    "companyOrgType": {
+      "title": "Employer type",
+      "type": "string",
+      "description": "Companies mode only: organisation type filter, e.g. BPO, Staffing, Enterprise (see the values in Companies-mode output).",
+      "editor": "textfield"
+    },
+    "companyHasWebsite": {
+      "title": "Only employers with a verified website",
+      "type": "boolean",
+      "description": "Companies mode only.",
+      "default": false
+    },
+    "startCursor": {
+      "title": "Start cursor",
+      "type": "string",
+      "description": "Resume a previous pull: paste the next_cursor from that run's SUMMARY record. Keep every other input identical.",
+      "editor": "textfield"
+    }
+  },
+  "required": []
+}

@@ -1,0 +1,22 @@
+{
+  "actorSpecification": 1,
+  "name": "job-opportunities-api",
+  "title": "Employer-Direct Jobs API — 2M+ live listings, EU & global (JOA)",
+  "description": "Search live and closed job listings taken straight from employer ATS, career sites and public agencies. Every field tagged published or inferred. Pay per record.",
+  "version": "1.0",
+  "buildTag": "latest",
+  "meta": {
+    "templateId": "custom"
+  },
+  "input": "./input_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "minMemoryMbytes": 128,
+  "maxMemoryMbytes": 512,
+  "categories": [
+    "JOBS",
+    "LEAD_GENERATION",
+    "AI"
+  ]
+}

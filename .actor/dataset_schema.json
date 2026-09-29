@@ -1,0 +1,198 @@
+{
+  "actorSpecification": 1,
+  "fields": {},
+  "views": {
+    "jobs": {
+      "title": "Jobs",
+      "description": "Live or closed job listings",
+      "transformation": {
+        "fields": [
+          "title",
+          "company",
+          "country",
+          "city",
+          "remote",
+          "employment_type",
+          "seniority",
+          "category",
+          "salary_min",
+          "salary_max",
+          "salary_currency",
+          "posted_at",
+          "last_verified_at",
+          "apply_url",
+          "joa_url"
+        ],
+        "limit": 1000
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title",
+            "format": "text"
+          },
+          "company": {
+            "label": "Company",
+            "format": "text"
+          },
+          "country": {
+            "label": "Country",
+            "format": "text"
+          },
+          "city": {
+            "label": "City",
+            "format": "text"
+          },
+          "remote": {
+            "label": "Work model",
+            "format": "text"
+          },
+          "employment_type": {
+            "label": "Type",
+            "format": "text"
+          },
+          "seniority": {
+            "label": "Seniority",
+            "format": "text"
+          },
+          "category": {
+            "label": "Category",
+            "format": "text"
+          },
+          "salary_min": {
+            "label": "Salary min",
+            "format": "number"
+          },
+          "salary_max": {
+            "label": "Salary max",
+            "format": "number"
+          },
+          "salary_currency": {
+            "label": "Cur.",
+            "format": "text"
+          },
+          "posted_at": {
+            "label": "Posted",
+            "format": "date"
+          },
+          "last_verified_at": {
+            "label": "Verified",
+            "format": "date"
+          },
+          "apply_url": {
+            "label": "Apply",
+            "format": "link"
+          },
+          "joa_url": {
+            "label": "JOA page",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "closed": {
+      "title": "Closed jobs",
+      "description": "Roles that left their source",
+      "transformation": {
+        "fields": [
+          "title",
+          "company",
+          "country",
+          "closed_at",
+          "closed_reason",
+          "posted_at",
+          "apply_url",
+          "joa_url"
+        ],
+        "limit": 1000
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "title": {
+            "label": "Title",
+            "format": "text"
+          },
+          "company": {
+            "label": "Company",
+            "format": "text"
+          },
+          "country": {
+            "label": "Country",
+            "format": "text"
+          },
+          "closed_at": {
+            "label": "Closed",
+            "format": "date"
+          },
+          "closed_reason": {
+            "label": "Reason",
+            "format": "text"
+          },
+          "posted_at": {
+            "label": "Posted",
+            "format": "date"
+          },
+          "apply_url": {
+            "label": "Apply",
+            "format": "link"
+          },
+          "joa_url": {
+            "label": "JOA page",
+            "format": "link"
+          }
+        }
+      }
+    },
+    "companies": {
+      "title": "Companies",
+      "description": "Employers with open roles",
+      "transformation": {
+        "fields": [
+          "name",
+          "country",
+          "industry",
+          "org_type",
+          "open_roles",
+          "website",
+          "joa_url"
+        ],
+        "limit": 1000
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "name": {
+            "label": "Employer",
+            "format": "text"
+          },
+          "country": {
+            "label": "Country",
+            "format": "text"
+          },
+          "industry": {
+            "label": "Industry",
+            "format": "text"
+          },
+          "org_type": {
+            "label": "Type",
+            "format": "text"
+          },
+          "open_roles": {
+            "label": "Open roles",
+            "format": "number"
+          },
+          "website": {
+            "label": "Website",
+            "format": "text"
+          },
+          "joa_url": {
+            "label": "JOA page",
+            "format": "link"
+          }
+        }
+      }
+    }
+  }
+}
