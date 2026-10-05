@@ -39,7 +39,7 @@ export function buildRequest(input = {}, now = Date.now()) {
   const mode = input.mode || 'jobs';
   if (!MODES[mode]) throw new InputError(`Unknown mode "${mode}". Use jobs, closed_jobs or companies.`);
 
-  let maxResults = input.maxResults === undefined || input.maxResults === null ? 100 : Number(input.maxResults);
+  let maxResults = input.maxResults === undefined || input.maxResults === null ? 25 : Number(input.maxResults);
   if (!Number.isInteger(maxResults) || maxResults < 1) throw new InputError('"maxResults" must be a whole number of at least 1.');
   if (maxResults > 100000) throw new InputError('"maxResults" is capped at 100,000 per run. Use "startCursor" to continue in another run.');
 

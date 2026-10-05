@@ -1,103 +1,148 @@
-# Employer-Direct Jobs API — Job Opportunities API (JOA) on Apify
+# Employer-Direct Job Postings API (Job Opportunities API)
 
-Search **live and closed job listings taken straight from the source**: employer applicant-tracking systems, company career pages and public employment agencies. More than **2 million live listings worldwide**, of which **466,000+ employer-direct listings in Europe** — with **every field labelled `published` or `inferred`** so you know what the employer said and what we guessed.
+Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org).
 
-This Actor is the Apify edition of [jobopportunitiesapi.org](https://jobopportunitiesapi.org). No scraping happens at run time: it reads a continuously refreshed ledger, so runs are **fast, stable and cheap** — no proxies, no blocked requests, no broken selectors.
+- **No scraping at run time.** The Actor reads a continuously re-verified job ledger, so runs finish in seconds: no proxies, no blocked requests, no broken selectors.
+- **Every field says where it came from.** `field_sources` labels each field `published` (the employer said it), `inferred` (we derived it) or `absent`.
+- **Live and closed jobs.** Roles that come off their source are kept with `closed_at` and `closed_reason` — useful hiring signals.
+- **Employer-direct only.** Aggregators and job boards such as LinkedIn and Indeed are excluded on purpose; every row links to the employer's own apply page.
 
-## What you can pull
+## Quick start
 
-| Mode | What it returns | Typical use |
+1. Click **Start** with the default input — it returns 25 recent software-engineering jobs in Germany in a few seconds (under 10 cents).
+2. Change the role, country or company (examples below) and raise **Max results** when you need more.
+3. Download the dataset as JSON, CSV or Excel, or connect it to Make, Zapier, n8n, Google Sheets, webhooks or an AI agent through the Apify API.
+
+## Use cases
+
+- **Job boards and niche job sites** — fill a board with fresh, employer-direct vacancies by country, role or category, with the original apply link.
+- **AI job agents and copilots** — give an agent structured, provenance-labelled postings instead of scraped HTML.
+- **Sales prospecting and lead lists** — find companies that are hiring for a role (a buying signal), with company website and open-role counts.
+- **Labour-market research** — track what is being posted and what closes, by country, city, seniority or category.
+- **Recruiting and talent intelligence** — watch competitors' hiring by company domain.
+
+## Modes
+
+| Mode | What it returns | Billed event |
 |---|---|---|
-| **Jobs** | Live vacancies, newest first | Job boards, AI job agents, lead lists, market research |
-| **Closed jobs** | Roles that left their source, with `closed_at` and `closed_reason` | Hiring-signal data: how fast do employers fill roles? |
-| **Companies** | Employers with open roles, industry, org type, website, open-role counts | Sales prospecting, employer databases |
+| **Jobs** (default) | Live vacancies, newest first | Job listing returned |
+| **Closed jobs** | Roles that left their source, with `closed_at` and `closed_reason` | Closed job returned |
+| **Companies** | Employers with open roles: website, industry, organisation type, open-role counts | Employer returned |
 
-### Why this data is different
+## Input examples
 
-- **Per-field provenance.** `field_sources` marks each field `published`, `inferred` or `absent`. Filter to source-confirmed remote status only.
-- **Freshness you can query.** `last_verified_at` is when we last re-confirmed the vacancy at its source — about 97% of the ledger is re-checked inside 48 hours. Filter with *Re-verified within (days)*.
-- **Closure history.** Roles that came off their source are kept, with the reason.
-- **Every row links to the employer's own apply page** (`apply_url`) and to a public JOA page (`joa_url`).
-- **Redistribution is enforced by a database join**, not a filter someone can forget: only employer ATS, career-site and government-agency sources are served.
+Every field is optional. Typical searches:
 
-### Honest coverage notes
+**A role in one country**
+```json
+{ "mode": "jobs", "query": "software engineer", "countries": ["DE"], "maxResults": 25 }
+```
 
-- Salary is published by the employer on roughly **2%** of rows. Use *Only rows with a published salary* together with a country.
-- **Remote / hybrid / on-site** is inferred for most rows; tick *Only source-confirmed remote status* if you need certainty.
-- Seniority and category are inferred and shown only when confidence is high; otherwise they are absent, never guessed.
+**Remote or hybrid data roles across several countries, re-verified in the last 2 days**
+```json
+{ "mode": "jobs", "titleQuery": "data engineer", "countries": ["NL", "DE", "BE"], "remote": ["remote", "hybrid"], "verifiedWithinDays": 2, "maxResults": 200 }
+```
+
+**Every open role at specific companies**
+```json
+{ "mode": "jobs", "companyDomains": ["spotify.com"], "maxResults": 500 }
+```
+
+**Healthcare roles in the US posted in the last week, with the full advert text**
+```json
+{ "mode": "jobs", "titleQuery": "nurse", "countries": ["US"], "postedWithinDays": 7, "includeDescription": true, "maxResults": 100 }
+```
+
+**Roles that closed in France in the last 7 days (hiring signals)**
+```json
+{ "mode": "closed_jobs", "countries": ["FR"], "closedWithinDays": 7, "maxResults": 100 }
+```
+
+**Companies hiring in Ireland that have a website**
+```json
+{ "mode": "companies", "countries": ["IE"], "companyHasWebsite": true, "maxResults": 100 }
+```
+
+Other filters: title exclusions, text in the description, excluded countries, city, employment type, seniority, job category, source type, company slugs, published salary only, minimum annual salary (EUR), source-confirmed remote status only.
+
+### Large pulls in several runs
+
+Each run writes a `SUMMARY` record to the key-value store with `next_cursor` when more results exist. Paste it into **Start cursor** (keep the other inputs identical) to continue exactly where the previous run stopped.
+
+## Output sample (Jobs mode, abridged)
+
+```json
+{
+  "id": "78d67bf5-bdd1-4b56-9ea1-ef8744b35d21",
+  "title": "Software Engineer, Foundation (Mid-Level)",
+  "company": "Clera",
+  "category": "Engineering",
+  "country": "DE",
+  "city": "Berlin",
+  "remote": "on_site",
+  "remote_inferred": false,
+  "seniority": "Mid",
+  "posted_at": "2026-10-04T17:07:00Z",
+  "last_verified_at": "2026-10-04T19:56:43Z",
+  "status": "live",
+  "apply_url": "https://jobs.ashbyhq.com/clera/4d0b97c5-1830-414f-a4d8-edac9fdc9972/application",
+  "source": "ashby",
+  "source_type": "ats",
+  "field_sources": {
+    "remote": "published",
+    "location": "published",
+    "posted_at": "published",
+    "category": "inferred",
+    "seniority": "inferred",
+    "salary": "absent"
+  },
+  "joa_url": "https://jobopportunitiesapi.org/job/software-engineer-foundation-mid-level-78d67bf5"
+}
+```
+
+## Where each field comes from (provenance)
+
+- **published** — taken from the employer's own posting: title, location, apply link, posting date, advert text and, when the employer states it, salary and work model.
+- **inferred** — derived by JOA when the employer did not state it, for example category, seniority or remote status. Seniority and category appear only when confidence is high; otherwise they are `absent`, never guessed.
+- **absent** — the employer did not publish it and we did not infer it.
+- `last_verified_at` is when the vacancy was last re-confirmed at its source; filter with **Re-verified within (days)**. Tick **Only source-confirmed remote status** when you need certainty about remote work.
 
 ## Pricing — pay only for records returned
 
 | Event | Price | Per 1,000 |
 |---|---|---|
-| Job listing returned | **$0.002** | $2.00 |
-| Closed job returned | **$0.004** | $4.00 |
-| Employer returned | **$0.002** | $2.00 |
-| Actor start | $0.00005 | — |
+| Job listing returned | $0.0035 | $3.50 |
+| Employer returned | $0.0035 | $3.50 |
+| Closed job returned | $0.006 | $6.00 |
 
-Empty pages and searches that match nothing cost nothing beyond the start fee. Set **Max results** and Apify's **maximum cost per run** to cap spend; the run stops the moment either is reached. The Apify free plan's monthly credit covers roughly 2,500 job listings.
+Searches that match nothing cost nothing. A first run with the default input costs under 10 cents, and the Apify free plan's monthly credit covers well over a thousand job listings. Cap spending with **Max results** and Apify's **maximum cost per run**; the run stops as soon as either is reached.
 
-## Input
-
-Every field is optional; the defaults return 100 recent jobs.
-
-```json
-{
-  "mode": "jobs",
-  "query": "data engineer",
-  "countries": ["DE", "NL"],
-  "remote": ["remote", "hybrid"],
-  "seniorities": ["Senior", "Lead"],
-  "verifiedWithinDays": 2,
-  "postedWithinDays": 14,
-  "includeDescription": false,
-  "maxResults": 500
-}
-```
-
-Filters cover: full-text query, title include/exclude, description text, countries, city, work model, employment type, seniority, job category, source type, company slugs, company domains, published salary and minimum annual salary (EUR), posted / re-verified / closed windows, and full advert text.
-
-### Pulling a large set in several runs
-
-Each run writes a `SUMMARY` record to the key-value store containing `next_cursor` when more results exist. Paste it into **Start cursor** (keep the other inputs identical) to continue exactly where the previous run stopped.
-
-## Output (Jobs mode, abridged)
-
-```json
-{
-  "id": "fdf6503a-df64-493b-9a50-eaef5e2a11f0",
-  "title": "Spezialist Direktvermarktung und Partnerbetreuung (m/w/d)",
-  "company": "E.VITA GmbH",
-  "country": "DE",
-  "city": "Stuttgart",
-  "remote": "hybrid",
-  "remote_inferred": true,
-  "employment_type": "Full-time",
-  "salary_min": 49000,
-  "salary_max": 65000,
-  "salary_currency": "EUR",
-  "salary_period": "year",
-  "posted_at": "2026-09-28T00:00:00Z",
-  "last_verified_at": "2026-09-29T09:05:30Z",
-  "apply_url": "https://evita-energie.softgarden.io/job/67688737/",
-  "source_type": "career_site",
-  "field_sources": { "remote": "inferred", "salary": "published", "location": "published" },
-  "joa_url": "https://jobopportunitiesapi.org/job/spezialist-direktvermarktung-und-partnerbetreuung-m-w-d-fdf6503a"
-}
-```
-
-Download as JSON, CSV, Excel, XML or HTML, or read it through the Apify API and integrations (Make, Zapier, n8n, Google Sheets, webhooks, MCP for AI agents).
+For steady monthly volumes, the direct REST API is cheaper per record — see the plans (including a free tier) at [jobopportunitiesapi.org/pricing](https://jobopportunitiesapi.org/pricing).
 
 ## FAQ
 
-**Is this scraping LinkedIn or Indeed?** No. Those aggregators are excluded on purpose. Listings come from employer ATS platforms (Greenhouse, Lever, Workday, SmartRecruiters and many more), company career pages and public agencies.
+**Is this a LinkedIn or Indeed scraper?** No. Aggregators and job boards are excluded on purpose. Postings come from employer ATS platforms, company career pages and public employment agencies, and each links to the employer's own apply page.
 
-**How fresh is it?** The ledger refreshes every few hours; each row carries `last_verified_at`.
+**How fresh is the data?** The ledger is refreshed continuously and vacancies are re-checked at their source; every row carries `last_verified_at`, and you can filter on it.
 
-**Can I integrate directly instead?** Yes — the same data is available as a REST API with a free tier at [jobopportunitiesapi.org](https://jobopportunitiesapi.org), and per call on [API.market](https://api.market/store/tzekos/jobopportunitiesapi). This Actor is the pay-per-result option inside Apify.
+**Which countries are covered?** Worldwide, with the deepest coverage in Europe and North America. Live figures by country are published at [api.jobopportunitiesapi.org/public/coverage](https://api.jobopportunitiesapi.org/public/coverage).
 
-**A run failed with a credential message.** That is an operator-side problem, never your input. Please open an issue on the Actor's Issues tab.
+**Is salary included?** Only when the employer publishes it — many employers do not. Use **Only rows with a published salary** to restrict to those rows.
+
+**Can I get the full job description?** Yes — tick **Include full advert text**.
+
+**How do I get more than one run's worth?** Use the `next_cursor` from the `SUMMARY` record (see above), or schedule the Actor with **Posted within (days)** to collect only new postings.
+
+**Can I use it from an AI agent?** Yes — through the Apify API, Apify's MCP server, or JOA's own MCP server and REST API.
+
+**Is there documentation for the underlying API?** Yes: [jobopportunitiesapi.org/docs](https://jobopportunitiesapi.org/docs).
+
+**Is there a free report built on this data?** Yes — the free monthly job-market report: [jobopportunitiesapi.org/reports/job-market-september-2026](https://jobopportunitiesapi.org/reports/job-market-september-2026).
+
+**A run failed with a credential message.** That is a problem on our side, never your input. Please open an issue on the Actor's **Issues** tab.
 
 ## Support
 
-Issues and feature requests: the Actor's **Issues** tab or [GitHub](https://github.com/lucagiftzek/JOA-Apify/issues). Built and operated by [TZEKOS.EU](https://tzekos.eu).
+Questions, bugs and feature requests: the Actor's **Issues** tab, or support@jobopportunitiesapi.org.
+
+Built and operated by Loukas Tzekos, founder of Job Opportunities API — [jobopportunitiesapi.org](https://jobopportunitiesapi.org).

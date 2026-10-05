@@ -25,10 +25,10 @@
       "title": "Max results",
       "type": "integer",
       "description": "Hard cap on records returned (and billed). The run stops as soon as it is reached. Use Start cursor to continue a large pull in a later run.",
-      "default": 100,
+      "default": 25,
       "minimum": 1,
       "maximum": 100000,
-      "prefill": 100
+      "prefill": 25
     },
     "query": {
       "title": "Search text",
@@ -241,7 +241,7 @@
     "verifiedWithinDays": {
       "title": "Re-verified within (days)",
       "type": "integer",
-      "description": "Only roles re-confirmed at their source in the last N days — the freshness filter. 97% of the ledger is re-checked inside 48 hours, so 2 is a good value. Jobs / Closed jobs only.",
+      "description": "Only roles re-confirmed at their source in the last N days — the freshness filter. Most of the ledger is re-checked within 48 hours, so 2 is a good value. Jobs / Closed jobs only.",
       "minimum": 1,
       "maximum": 365
     },

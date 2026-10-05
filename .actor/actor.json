@@ -1,8 +1,8 @@
 {
   "actorSpecification": 1,
   "name": "job-opportunities-api",
-  "title": "Employer-Direct Jobs API - 2M+ Live Listings (JOA)",
-  "description": "Search live and closed job listings taken straight from employer ATS, career sites and public agencies. Every field tagged published or inferred. Pay per record.",
+  "title": "Employer-Direct Job Postings API (Job Opportunities API)",
+  "description": "Job postings straight from employer ATS (Greenhouse, Lever, Workday, Ashby and more), career sites and public agencies. No scraping, no proxies. Live and closed jobs, per-field provenance, pay per result.",
   "version": "1.0",
   "buildTag": "latest",
   "meta": {
@@ -18,7 +18,7 @@
   "categories": [
     "JOBS",
     "LEAD_GENERATION",
-    "AI"
+    "AUTOMATION"
   ],
   "output": "./output_schema.json"
 }

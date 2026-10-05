@@ -1,22 +1,17 @@
 {
-  "apify-actor-start": {
-    "eventTitle": "Actor start",
-    "eventDescription": "Flat fee per run start (covers the first seconds of compute). Charged automatically by Apify.",
-    "eventPriceUsd": 0.00005
-  },
   "job-record": {
     "eventTitle": "Job listing returned",
     "eventDescription": "One live job listing returned in the dataset (Jobs mode). Includes per-field provenance and freshness timestamps.",
-    "eventPriceUsd": 0.002
+    "eventPriceUsd": 0.0035
   },
   "closed-job-record": {
     "eventTitle": "Closed job returned",
     "eventDescription": "One job that left its source, with closed_at and closed_reason (Closed jobs mode). A hiring-signal record.",
-    "eventPriceUsd": 0.004
+    "eventPriceUsd": 0.006
   },
   "company-record": {
     "eventTitle": "Employer returned",
     "eventDescription": "One employer record with open-role counts, industry and website (Companies mode).",
-    "eventPriceUsd": 0.002
+    "eventPriceUsd": 0.0035
   }
 }

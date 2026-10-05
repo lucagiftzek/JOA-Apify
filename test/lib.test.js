@@ -36,9 +36,9 @@ test('companies mode ignores job-only filters', () => {
   assert.deepEqual(r.params, { q: 'siemens', country: 'DE', has_website: 'true' });
 });
 
-test('defaults: jobs, 100 results, empty filters', () => {
+test('defaults: jobs, 25 results, empty filters', () => {
   const r = buildRequest({}, NOW);
-  assert.equal(r.mode, 'jobs'); assert.equal(r.maxResults, 100); assert.deepEqual(r.params, {});
+  assert.equal(r.mode, 'jobs'); assert.equal(r.maxResults, 25); assert.deepEqual(r.params, {});
 });
 
 test('input validation', () => {
