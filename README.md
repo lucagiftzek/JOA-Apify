@@ -13,6 +13,8 @@ Get **job postings straight from employers**: applicant-tracking systems (Greenh
 2. Change the role, country or company (examples below) and raise **Max results** when you need more.
 3. Download the dataset as JSON, CSV or Excel, or connect it to Make, Zapier, n8n, Google Sheets, webhooks or an AI agent through the Apify API.
 
+![Default run output: employer-direct software-engineering jobs in Germany, with field provenance badges](https://raw.githubusercontent.com/lucagiftzek/JOA-Apify/main/docs/output.png)
+
 ## Use cases
 
 - **Job boards and niche job sites** — fill a board with fresh, employer-direct vacancies by country, role or category, with the original apply link.
