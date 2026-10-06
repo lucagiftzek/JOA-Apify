@@ -137,6 +137,8 @@ For steady monthly volumes, the direct REST API is cheaper per record — see th
 
 **Can I use it from an AI agent?** Yes — through the Apify API, Apify's MCP server, or JOA's own MCP server and REST API.
 
+**Can I use the data in my own product, or resell it?** Yes. You may store, display, resell and redistribute the records you get, with a visible credit "Data: Job Opportunities API" linking to [jobopportunitiesapi.org](https://jobopportunitiesapi.org) where listings are shown publicly. If an employer asks for a listing to be removed, we ask you to remove it too. Full terms: [jobopportunitiesapi.org/terms](https://jobopportunitiesapi.org/terms).
+
 **Is there documentation for the underlying API?** Yes: [jobopportunitiesapi.org/docs](https://jobopportunitiesapi.org/docs).
 
 **Is there a free report built on this data?** Yes — the free monthly job-market report: [jobopportunitiesapi.org/reports/job-market-september-2026](https://jobopportunitiesapi.org/reports/job-market-september-2026).
