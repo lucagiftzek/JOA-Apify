@@ -1,6 +1,6 @@
 # Employer-Direct Job Postings API (Job Opportunities API)
 
-Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org).
+Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org). The ledger holds over 2 million live job postings worldwide, over 500,000 of them in Europe (EU, EFTA and UK), read directly from 60+ recruiting platforms.
 
 - **No scraping at run time.** The Actor reads a continuously re-verified job ledger, so runs finish in seconds: no proxies, no blocked requests, no broken selectors.
 - **Every field says where it came from.** `field_sources` labels each field `published` (the employer said it), `inferred` (we derived it) or `absent`.
@@ -119,7 +119,7 @@ Each run writes a `SUMMARY` record to the key-value store with `next_cursor` whe
 
 Searches that match nothing cost nothing. A first run with the default input costs under 10 cents, and the Apify free plan's monthly credit covers well over a thousand job listings. Cap spending with **Max results** and Apify's **maximum cost per run**; the run stops as soon as either is reached.
 
-For steady monthly volumes, the direct REST API is cheaper per record — see the plans (including a free tier) at [jobopportunitiesapi.org/pricing](https://jobopportunitiesapi.org/pricing).
+For steady monthly volumes, the direct REST API is cheaper per record — see the plans at [jobopportunitiesapi.org/pricing](https://jobopportunitiesapi.org/pricing). A free Explore key gives 1,000 records a month, and the first month of a monthly Starter or Growth plan is free with a company email address.
 
 ## FAQ
 
@@ -135,7 +135,7 @@ For steady monthly volumes, the direct REST API is cheaper per record — see th
 
 **How do I get more than one run's worth?** Use the `next_cursor` from the `SUMMARY` record (see above), or schedule the Actor with **Posted within (days)** to collect only new postings.
 
-**Can I use it from an AI agent?** Yes — through the Apify API, Apify's MCP server, or JOA's own MCP server and REST API.
+**Can I use it from an AI agent?** Yes — through the Apify API, Apify's MCP server, or JOA's own MCP server (https://api.jobopportunitiesapi.org/mcp) and REST API.
 
 **Can I use the data in my own product, or resell it?** Yes. You may store, display, resell and redistribute the records you get, with a visible credit "Data: Job Opportunities API" linking to [jobopportunitiesapi.org](https://jobopportunitiesapi.org) where listings are shown publicly. If an employer asks for a listing to be removed, we ask you to remove it too. Full terms: [jobopportunitiesapi.org/terms](https://jobopportunitiesapi.org/terms).
 

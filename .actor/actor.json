@@ -2,7 +2,7 @@
   "actorSpecification": 1,
   "name": "job-opportunities-api",
   "title": "Employer-Direct Job Postings API (Job Opportunities API)",
-  "description": "Job postings straight from employer ATS (Greenhouse, Lever, Workday, Ashby and more), career sites and public agencies. No scraping, no proxies. Live and closed jobs, per-field provenance, pay per result.",
+  "description": "Job postings straight from employer ATS (Greenhouse, Lever, Workday, Ashby and more), career sites and public agencies. No scraping, no proxies. Live and closed jobs with closure dates, over 2 million live postings, per-field provenance, pay per result.",
   "version": "1.0",
   "buildTag": "latest",
   "meta": {
