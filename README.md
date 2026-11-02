@@ -1,6 +1,6 @@
 # Employer-Direct Job Postings API (Job Opportunities API)
 
-Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org). The ledger holds over 2 million live job postings worldwide, over 500,000 of them in Europe (EU, EFTA and UK), read directly from 60+ recruiting platforms.
+Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org). The ledger holds over 2 million live job postings worldwide, over 500,000 of them in Europe (EU, EFTA and UK), read directly from 57 applicant tracking systems, plus employer career pages and public employment agencies (live count: https://jobopportunitiesapi.org/coverage).
 
 - **No scraping at run time.** The Actor reads a continuously re-verified job ledger, so runs finish in seconds: no proxies, no blocked requests, no broken selectors.
 - **Every field says where it came from.** `field_sources` labels each field `published` (the employer said it), `inferred` (we derived it) or `absent`.
