@@ -1,15 +1,15 @@
 # Employer-Direct Job Postings API (Job Opportunities API)
 
-Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)** — [jobopportunitiesapi.org](https://jobopportunitiesapi.org). The ledger holds over 2 million live job postings worldwide, over 500,000 of them in Europe (EU, EFTA and UK), read directly from 70 sources: 61 applicant tracking systems, 7 direct employer channels and 2 public employment services (live count: https://jobopportunitiesapi.org/coverage).
+Get **job postings straight from employers**: applicant-tracking systems (Greenhouse, Lever, Workday, Ashby, SmartRecruiters and many more), company career pages and public employment agencies. This Actor is the Apify edition of **Job Opportunities API (JOA)**: [jobopportunitiesapi.org](https://jobopportunitiesapi.org). The ledger holds over 2 million live job postings worldwide, over 500,000 of them in Europe (EU, EFTA and UK), read directly from 70 sources: 61 applicant tracking systems, 7 direct employer channels and 2 public employment services (live count: https://jobopportunitiesapi.org/coverage).
 
 - **No scraping at run time.** The Actor reads a continuously re-verified job ledger, so runs finish in seconds: no proxies, no blocked requests, no broken selectors.
 - **Every field says where it came from.** `field_sources` labels each field `published` (the employer said it), `inferred` (we derived it) or `absent`.
-- **Live and closed jobs.** Roles that come off their source are kept with `closed_at` and `closed_reason` — useful hiring signals.
+- **Live and closed jobs.** Roles that come off their source are kept with `closed_at` and `closed_reason`, useful hiring signals.
 - **Employer-direct only.** Aggregators and job boards such as LinkedIn and Indeed are excluded on purpose; every row links to the employer's own apply page.
 
 ## Quick start
 
-1. Click **Start** with the default input — it returns 25 recent software-engineering jobs in Germany in a few seconds (under 10 cents).
+1. Click **Start** with the default input: it returns 25 recent software-engineering jobs in Germany in a few seconds (under 10 cents).
 2. Change the role, country or company (examples below) and raise **Max results** when you need more.
 3. Download the dataset as JSON, CSV or Excel, or connect it to Make, Zapier, n8n, Google Sheets, webhooks or an AI agent through the Apify API.
 
@@ -17,11 +17,11 @@ Get **job postings straight from employers**: applicant-tracking systems (Greenh
 
 ## Use cases
 
-- **Job boards and niche job sites** — fill a board with fresh, employer-direct vacancies by country, role or category, with the original apply link.
-- **AI job agents and copilots** — give an agent structured, provenance-labelled postings instead of scraped HTML.
-- **Sales prospecting and lead lists** — find companies that are hiring for a role (a buying signal), with company website and open-role counts.
-- **Labour-market research** — track what is being posted and what closes, by country, city, seniority or category.
-- **Recruiting and talent intelligence** — watch competitors' hiring by company domain.
+- **Job boards and niche job sites**: fill a board with fresh, employer-direct vacancies by country, role or category, with the original apply link.
+- **AI job agents and copilots**: give an agent structured, provenance-labelled postings instead of scraped HTML.
+- **Sales prospecting and lead lists**: find companies that are hiring for a role (a buying signal), with company website and open-role counts.
+- **Labour-market research**: track what is being posted and what closes, by country, city, seniority or category.
+- **Recruiting and talent intelligence**: watch competitors' hiring by company domain.
 
 ## Modes
 
@@ -104,12 +104,12 @@ Each run writes a `SUMMARY` record to the key-value store with `next_cursor` whe
 
 ## Where each field comes from (provenance)
 
-- **published** — taken from the employer's own posting: title, location, apply link, posting date, advert text and, when the employer states it, salary and work model.
-- **inferred** — derived by JOA when the employer did not state it, for example category, seniority or remote status. Seniority and category appear only when confidence is high; otherwise they are `absent`, never guessed.
-- **absent** — the employer did not publish it and we did not infer it.
+- **published**: taken from the employer's own posting: title, location, apply link, posting date, advert text and, when the employer states it, salary and work model.
+- **inferred**: derived by JOA when the employer did not state it, for example category, seniority or remote status. Seniority and category appear only when confidence is high; otherwise they are `absent`, never guessed.
+- **absent**: the employer did not publish it and we did not infer it.
 - `last_verified_at` is when the vacancy was last re-confirmed at its source; filter with **Re-verified within (days)**. Tick **Only source-confirmed remote status** when you need certainty about remote work.
 
-## Pricing — pay only for records returned
+## Pricing: pay only for records returned
 
 | Event | Price | Per 1,000 |
 |---|---|---|
@@ -119,7 +119,7 @@ Each run writes a `SUMMARY` record to the key-value store with `next_cursor` whe
 
 Searches that match nothing cost nothing. A first run with the default input costs under 10 cents, and the Apify free plan's monthly credit covers well over a thousand job listings. Cap spending with **Max results** and Apify's **maximum cost per run**; the run stops as soon as either is reached.
 
-For steady monthly volumes, the direct REST API is cheaper per record — see the plans at [jobopportunitiesapi.org/pricing](https://jobopportunitiesapi.org/pricing). A free Explore key gives 1,000 records a month, and the first month of a monthly Starter or Growth plan is free with a company email address.
+For steady monthly volumes, the direct REST API is cheaper per record, see the plans at [jobopportunitiesapi.org/pricing](https://jobopportunitiesapi.org/pricing). A free Explore key gives 1,000 records a month, and the first month of a monthly Starter or Growth plan is free with a company email address.
 
 ## FAQ
 
@@ -129,19 +129,19 @@ For steady monthly volumes, the direct REST API is cheaper per record — see th
 
 **Which countries are covered?** Worldwide, with the deepest coverage in Europe and North America. Live figures by country are published at [api.jobopportunitiesapi.org/public/coverage](https://api.jobopportunitiesapi.org/public/coverage).
 
-**Is salary included?** Only when the employer publishes it — many employers do not. Use **Only rows with a published salary** to restrict to those rows.
+**Is salary included?** Only when the employer publishes it, many employers do not. Use **Only rows with a published salary** to restrict to those rows.
 
-**Can I get the full job description?** Yes — tick **Include full advert text**.
+**Can I get the full job description?** Yes, tick **Include full advert text**.
 
 **How do I get more than one run's worth?** Use the `next_cursor` from the `SUMMARY` record (see above), or schedule the Actor with **Posted within (days)** to collect only new postings.
 
-**Can I use it from an AI agent?** Yes — through the Apify API, Apify's MCP server, or JOA's own MCP server (https://api.jobopportunitiesapi.org/mcp) and REST API.
+**Can I use it from an AI agent?** Yes, through the Apify API, Apify's MCP server, or JOA's own MCP server (https://api.jobopportunitiesapi.org/mcp) and REST API.
 
 **Can I use the data in my own product, or resell it?** Yes. You may store, display, resell and redistribute the records you get, with a visible credit "Data: Job Opportunities API" linking to [jobopportunitiesapi.org](https://jobopportunitiesapi.org) where listings are shown publicly. If an employer asks for a listing to be removed, we ask you to remove it too. Full terms: [jobopportunitiesapi.org/terms](https://jobopportunitiesapi.org/terms).
 
 **Is there documentation for the underlying API?** Yes: [jobopportunitiesapi.org/docs](https://jobopportunitiesapi.org/docs).
 
-**Is there a free report built on this data?** Yes — the free monthly job-market report: [jobopportunitiesapi.org/reports/job-market-september-2026](https://jobopportunitiesapi.org/reports/job-market-september-2026).
+**Is there a free report built on this data?** Yes, the free monthly job-market report: [jobopportunitiesapi.org/reports/job-market-september-2026](https://jobopportunitiesapi.org/reports/job-market-september-2026).
 
 **A run failed with a credential message.** That is a problem on our side, never your input. Please open an issue on the Actor's **Issues** tab.
 
@@ -149,4 +149,4 @@ For steady monthly volumes, the direct REST API is cheaper per record — see th
 
 Questions, bugs and feature requests: the Actor's **Issues** tab, or support@jobopportunitiesapi.org.
 
-Built and operated by Loukas Tzekos, founder of Job Opportunities API — [jobopportunitiesapi.org](https://jobopportunitiesapi.org).
+Built and operated by Loukas Tzekos, founder of Job Opportunities API: [jobopportunitiesapi.org](https://jobopportunitiesapi.org).
