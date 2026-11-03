@@ -2,7 +2,7 @@
   "title": "Job Opportunities API input",
   "type": "object",
   "schemaVersion": 1,
-  "description": "Pick a mode, add filters, set a result cap. You pay per record returned — never for empty pages or for filters that match nothing.",
+  "description": "Pick a mode, add filters, set a result cap. You pay per record returned. You never pay for empty pages or for filters that match nothing.",
   "properties": {
     "mode": {
       "title": "Mode",
@@ -14,9 +14,9 @@
         "companies"
       ],
       "enumTitles": [
-        "Jobs — live vacancies",
-        "Closed jobs — roles that came off their source",
-        "Companies — employers with open roles"
+        "Jobs: live vacancies",
+        "Closed jobs: roles that came off their source",
+        "Companies: employers with open roles"
       ],
       "default": "jobs",
       "editor": "select"
@@ -85,7 +85,7 @@
     "remote": {
       "title": "Work model",
       "type": "array",
-      "description": "Remote / hybrid / on-site. Note: for most rows the work model is INFERRED — tick 'Only source-confirmed remote status' to keep rows where the employer stated it.",
+      "description": "Remote / hybrid / on-site. Note: for most rows the work model is INFERRED. Tick 'Only source-confirmed remote status' to keep rows where the employer stated it.",
       "editor": "select",
       "items": {
         "type": "string",
@@ -222,7 +222,7 @@
     "hasSalary": {
       "title": "Only rows with a published salary",
       "type": "boolean",
-      "description": "Keep only rows whose salary was published by the employer. Roughly 2% of the ledger carries structured salary — combine with a country to keep results useful.",
+      "description": "Keep only rows whose salary was published by the employer. Roughly 2% of the ledger carries structured salary. Combine with a country to keep results useful.",
       "default": false
     },
     "minSalaryEurAnnual": {
@@ -241,7 +241,7 @@
     "verifiedWithinDays": {
       "title": "Re-verified within (days)",
       "type": "integer",
-      "description": "Only roles re-confirmed at their source in the last N days — the freshness filter. Most of the ledger is re-checked within 48 hours, so 2 is a good value. Jobs / Closed jobs only.",
+      "description": "Only roles re-confirmed at their source in the last N days (the freshness filter). Most of the ledger is re-checked within 48 hours, so 2 is a good value. Jobs / Closed jobs only.",
       "minimum": 1,
       "maximum": 365
     },
