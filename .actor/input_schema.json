@@ -222,7 +222,7 @@
     "hasSalary": {
       "title": "Only rows with a published salary",
       "type": "boolean",
-      "description": "Keep only rows whose salary was published by the employer. Roughly 2% of the ledger carries structured salary. Combine with a country to keep results useful.",
+      "description": "Keep only rows whose salary was published by the employer. Many employers do not state pay, so combine with a country to keep results useful.",
       "default": false
     },
     "minSalaryEurAnnual": {
