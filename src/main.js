@@ -13,11 +13,12 @@ let resumable = true;
 
 try {
   const input = (await Actor.getInput()) ?? {};
-  const { mode, maxResults, params, startCursor } = buildRequest(input);
+  const { mode, maxResults, params, startCursor, notes } = buildRequest(input);
+  for (const n of notes) log.info(n);
   const { path, event, label } = MODES[mode];
 
   const key = process.env.JOA_API_KEY;
-  if (!key) throw new UpstreamError('This Actor is missing its JOA credential (JOA_API_KEY). This is an operator-side problem — please report it on the Actor\'s Issues tab.');
+  if (!key) throw new UpstreamError('This Actor is missing its JOA credential (JOA_API_KEY). This is an operator-side problem. Please report it on the Actor\'s Issues tab.');
   const apiBase = process.env.JOA_API_BASE || API_BASE_DEFAULT;
 
   // The largest page the plan allows; the API silently clamps, so ask for a sane number and trust what comes back.
@@ -57,10 +58,10 @@ try {
   if (returned === 0) stopReason = 'no_matches';
 
   const message = {
-    completed: `Done — ${returned} ${label} returned (all matches).`,
+    completed: `Done: ${returned} ${label} returned (all matches).`,
     no_matches: 'No records matched these filters. Nothing was billed except the run start.',
-    max_results_reached: `Done — ${returned} ${label} returned (limit reached; more exist — see SUMMARY.next_cursor to continue).`,
-    max_cost_per_run_reached: `Stopped at your maximum cost per run — ${returned} ${label} returned. Raise the limit to fetch more.`,
+    max_results_reached: `Done: ${returned} ${label} returned (limit reached; more exist, see SUMMARY.next_cursor to continue).`,
+    max_cost_per_run_reached: `Stopped at your maximum cost per run: ${returned} ${label} returned. Raise the limit to fetch more.`,
   }[stopReason];
   await Actor.setStatusMessage(message);
   await Actor.setValue('SUMMARY', {

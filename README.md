@@ -65,7 +65,7 @@ Every field is optional. Typical searches:
 { "mode": "companies", "countries": ["IE"], "companyHasWebsite": true, "maxResults": 100 }
 ```
 
-Other filters: title exclusions, text in the description, excluded countries, city, employment type, seniority, job category, source type, company slugs, published salary only, minimum annual salary (EUR), source-confirmed remote status only.
+Other filters: title exclusions, text in the description (Jobs mode only, since the API searches the advert text of live jobs), excluded countries, city, employment type, seniority, job category, source type, company slugs, published salary only, minimum annual salary (EUR), source-confirmed remote status only.
 
 ### Large pulls in several runs
 

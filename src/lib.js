@@ -1,4 +1,4 @@
-// Pure helpers for the JOA Apify Actor — no Apify SDK imports, so they are unit-testable.
+// Pure helpers for the JOA Apify Actor: no Apify SDK imports, so they are unit-testable.
 
 export const API_BASE_DEFAULT = 'https://api.jobopportunitiesapi.org';
 export const SITE_BASE = 'https://jobopportunitiesapi.org';
@@ -44,6 +44,7 @@ export function buildRequest(input = {}, now = Date.now()) {
   if (maxResults > 100000) throw new InputError('"maxResults" is capped at 100,000 per run. Use "startCursor" to continue in another run.');
 
   const p = {};
+  const notes = [];
   const set = (k, v) => { if (v !== undefined && v !== null && v !== '' && v !== false) p[k] = String(v); };
 
   const countries = csv(input.countries, { upper: true });
@@ -57,11 +58,14 @@ export function buildRequest(input = {}, now = Date.now()) {
     set('org_type', str(input.companyOrgType));
     set('source_type', csv(input.sourceTypes));
     if (input.companyHasWebsite === true) p.has_website = 'true';
+    if (str(input.descriptionContains)) notes.push('descriptionContains is ignored in companies mode.');
   } else {
     set('q', str(input.query));
     set('title', str(input.titleQuery));
     set('title_exclude', str(input.titleExclude));
-    set('description_contains', str(input.descriptionContains));
+    // The API searches the advert text of live jobs only (since 4 Nov 2026), so closed_jobs ignores it.
+    if (mode === 'jobs') set('description_contains', str(input.descriptionContains));
+    else if (str(input.descriptionContains)) notes.push('descriptionContains is ignored in closed_jobs mode: the API searches the advert text of live jobs only.');
     set('country', countries);
     set('exclude_country', csv(input.excludeCountries, { upper: true }));
     set('city', str(input.city));
@@ -87,7 +91,7 @@ export function buildRequest(input = {}, now = Date.now()) {
       set('closed_reason', str(input.closedReason));
     }
   }
-  return { mode, maxResults, params: p, startCursor: str(input.startCursor) || undefined };
+  return { mode, maxResults, params: p, startCursor: str(input.startCursor) || undefined, notes };
 }
 
 /** Add stable links back to the public JOA pages. */
@@ -118,7 +122,7 @@ export async function getPage({ base, path, params, key, fetchImpl = fetch, maxA
       let msg = body.slice(0, 300);
       try { const j = JSON.parse(body); msg = j.message || j.error || msg; } catch { /* keep raw */ }
       if (res.status === 400 || res.status === 422) throw new InputError(`JOA rejected the request: ${msg}`);
-      if (res.status === 401 || res.status === 403) throw new UpstreamError(`JOA refused this Actor's credentials (HTTP ${res.status}). This is an operator-side problem, not your input — please report it on the Actor's Issues tab.`);
+      if (res.status === 401 || res.status === 403) throw new UpstreamError(`JOA refused this Actor's credentials (HTTP ${res.status}). This is an operator-side problem, not your input. Please report it on the Actor's Issues tab.`);
       if (res.status === 429 || res.status >= 500) {
         const ra = Number(res.headers.get('retry-after'));
         const wait = Math.min(60_000, Number.isFinite(ra) && ra > 0 ? ra * 1000 : 1000 * 2 ** attempt + Math.random() * 500);

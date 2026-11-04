@@ -4,6 +4,19 @@ import { csv, buildRequest, decorate, getPage, InputError, UpstreamError } from 
 
 const NOW = Date.parse('2026-09-29T12:00:00Z');
 
+test('descriptionContains is sent in jobs mode only (the API searches live adverts only)', () => {
+  const jobs = buildRequest({ mode: 'jobs', descriptionContains: ' kubernetes ' }, NOW);
+  assert.equal(jobs.params.description_contains, 'kubernetes');
+  assert.deepEqual(jobs.notes, []);
+  const closed = buildRequest({ mode: 'closed_jobs', descriptionContains: 'kubernetes' }, NOW);
+  assert.equal(closed.params.description_contains, undefined);
+  assert.equal(closed.notes.length, 1);
+  assert.match(closed.notes[0], /ignored in closed_jobs mode/);
+  const companies = buildRequest({ mode: 'companies', descriptionContains: 'kubernetes' }, NOW);
+  assert.equal(companies.params.description_contains, undefined);
+  assert.equal(companies.notes.length, 1);
+});
+
 test('csv joins, trims, dedupes and upper-cases', () => {
   assert.equal(csv([' de', 'GR', 'de', ''], { upper: true }), 'DE,GR');
   assert.equal(csv('a, b ,a'), 'a,b');

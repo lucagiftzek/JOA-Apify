@@ -52,7 +52,7 @@
     "descriptionContains": {
       "title": "Description contains",
       "type": "string",
-      "description": "Full-text over the advert body (only rows that carry a description). Example: kubernetes terraform. Jobs / Closed jobs only.",
+      "description": "Full-text over the advert body (only rows that carry a description). Example: kubernetes terraform. Jobs only: the API searches the advert text of live jobs, so Closed jobs and Companies ignore it.",
       "editor": "textfield"
     },
     "countries": {
